@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import {
   FlatList,
-  Image,
+  Image, Linking,
   Modal,
   StyleSheet,
   Text,
@@ -20,6 +20,7 @@ type Props = {
   avatarStyle?: StyleSheet.Styles;
   titleStyle?: StyleSheet.Styles;
   textReadMore?: string;
+  onReadMoreOpen?: (string) => void;
 };
 
 const Stories = (props: Props) => {
@@ -77,6 +78,10 @@ const Stories = (props: Props) => {
     }
   };
 
+  const onReadMoreOpen =  (url: string) => {
+    Linking.openURL(url);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -122,6 +127,7 @@ const Stories = (props: Props) => {
               onClose={onStoryClose}
               onStoryNext={onStoryNext}
               onStoryPrevious={onStoryPrevious}
+              onReadMoreOpen={props.onReadMoreOpen || onReadMoreOpen}
               dataStories={item}
               isNewStory={index !== currentUserIndex}
               textReadMore={props.textReadMore}

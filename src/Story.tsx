@@ -2,8 +2,6 @@
 import React, {useState} from 'react';
 import {Dimensions, Image, StyleSheet, View} from 'react-native';
 import Video from 'react-native-video';
-// import Image from 'react-native-scalable-image';
-import PropTypes from 'prop-types';
 import {StoryType} from '.';
 
 const ScreenWidth = Dimensions.get('window').width;
@@ -34,7 +32,7 @@ const Story = (props: Props) => {
           source={{uri: url}}
           onLoadEnd={props.onImageLoaded}
           style={styles.content}
-          resizeMode="stretch"
+          resizeMode="contain"
           // width={ScreenWidth}
         />
       ) : (
@@ -48,9 +46,6 @@ const Story = (props: Props) => {
             setIsPortation(height > width);
             setHeightScaled(heightScaled);
             props.onVideoLoaded(item);
-
-            console.warn(width, height, heightScaled);
-            console.warn('É PAISAGEM?', isPortrait);
           }}
           style={
             isPortation
@@ -62,10 +57,6 @@ const Story = (props: Props) => {
       )}
     </View>
   );
-};
-
-Story.propTypes = {
-  story: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 //  720 405 231.42857142857142

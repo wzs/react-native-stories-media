@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   readText: {
+    marginTop: 8,
     fontSize: 14,
     fontWeight: "500",
     color: "white",

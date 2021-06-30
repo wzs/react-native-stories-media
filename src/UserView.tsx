@@ -10,27 +10,6 @@ type Props = {
   datePublication: string;
 };
 
-const diffDateWithNow = (date) => {
-  let startDate = new Date(date);
-  // Do your operations
-  let endDate = new Date();
-  let seconds = (endDate.getTime() - startDate.getTime()) / 1000;
-  let minutes = seconds / 60;
-  let hours = minutes / 60;
-  let days = hours / 24;
-  let current: string;
-  if (days >= 1) {
-    current = days == 1 ? "dia" : "dias";
-    return Math.trunc(days) + " " + current;
-  } else if (hours > 1) {
-    current = days == 1 ? "hora" : "horas";
-    return Math.trunc(hours) + " " + current;
-  } else {
-    current = minutes == 1 ? "minuto" : "minutos";
-    return Math.trunc(hours) + " " + current;
-  }
-};
-
 export default memo(function UserView(props: Props) {
   return (
     <View style={styles.userView}>
@@ -38,16 +17,7 @@ export default memo(function UserView(props: Props) {
       <View style={{ flex: 1 }}>
         <View style={styles.barUsername}>
           <Text style={styles.name}>{props.name}</Text>
-          <Image
-            source={require("./imgs/verify_icon.png")}
-            style={styles.verifyIcon}
-          />
         </View>
-
-        <Text style={styles.time}>
-          {!!props.datePublication &&
-            `Publicado há ${diffDateWithNow(props.datePublication)}`}
-        </Text>
       </View>
       <TouchableOpacity onPress={props.onClosePress}>
         <Icon name="close" color="white" size={25} style={{ marginRight: 8 }} />

@@ -5,11 +5,10 @@ import {
   NativeTouchEvent,
   StyleSheet,
   View,
-  TouchableOpacity,
+  TouchableOpacity, Linking,
 } from "react-native";
 
-import { WebView } from "react-native-webview";
-import Modal from "react-native-modalbox";
+
 import GestureRecognizer from "react-native-swipe-gestures";
 import Story from "./Story";
 import UserView from "./UserView";
@@ -22,6 +21,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 type Props = {
   dataStories: StoriesType;
   onStoryNext: (boolean) => void;
+  onReadMoreOpen: (string) => void,
   onStoryPrevious: (boolean) => void;
   onClose: () => void;
   isNewStory: boolean;
@@ -89,10 +89,8 @@ const StoryContainer: React.FC<Props> = (props: Props) => {
   const onReadMoreOpen = () => {
     setIsPause(true);
     setModel(true);
-  };
-  const onReadMoreClose = () => {
-    setIsPause(false);
-    setModel(false);
+    props.onClose();
+    props.onReadMoreOpen(stories[currentIndex].url_readmore);
   };
 
   const loading = () => {
@@ -156,7 +154,7 @@ const StoryContainer: React.FC<Props> = (props: Props) => {
             story={story}
           />
 
-          {loading()}
+          {/*{loading()}*/}
 
           <UserView
             name={dataStories.username}
@@ -183,15 +181,6 @@ const StoryContainer: React.FC<Props> = (props: Props) => {
           />
         </View>
 
-        <Modal
-          style={styles.modal}
-          position="bottom"
-          isOpen={isModelOpen}
-          onClosed={onReadMoreClose}
-        >
-          <View style={styles.bar} />
-          <WebView source={{ uri: stories[currentIndex].url_readmore }} />
-        </Modal>
       </TouchableOpacity>
     </GestureRecognizer>
   );
@@ -241,21 +230,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-  },
-  modal: {
-    width: "100%",
-    height: "90%",
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  bar: {
-    width: 50,
-    height: 8,
-    backgroundColor: "gray",
-    alignSelf: "center",
-    borderRadius: 4,
-    marginTop: 8,
   },
 });
 
