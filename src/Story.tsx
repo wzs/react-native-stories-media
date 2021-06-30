@@ -1,14 +1,12 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, {useState} from 'react';
+import React from 'react';
 import {Dimensions, Image, StyleSheet, View} from 'react-native';
-import Video from 'react-native-video';
 import {StoryType} from '.';
 
 const ScreenWidth = Dimensions.get('window').width;
 
 type Props = {
   story: StoryType;
-  onVideoLoaded?: (Object) => void;
   onImageLoaded?: () => void;
   pause: boolean;
   isLoaded?: boolean;
@@ -17,8 +15,6 @@ type Props = {
 const Story = (props: Props) => {
   const {story} = props;
   const {url, type} = story || {};
-  const [isPortation, setIsPortation] = useState(false);
-  const [heightScaled, setHeightScaled] = useState(231);
 
   return (
     <View style={styles.container}>
@@ -27,7 +23,6 @@ const Story = (props: Props) => {
         <ActivityIndicator color="white" />
       </View>
       )} */}
-      {type === 'image' ? (
         <Image
           source={{uri: url}}
           onLoadEnd={props.onImageLoaded}
@@ -35,26 +30,6 @@ const Story = (props: Props) => {
           resizeMode="contain"
           // width={ScreenWidth}
         />
-      ) : (
-        <Video
-          source={{uri: url}}
-          paused={props.pause || props.isNewStory}
-          onLoad={item => {
-            const {width, height} = item.naturalSize;
-            const heightScaled = height * (ScreenWidth / width);
-            let isPortrait = height > width;
-            setIsPortation(height > width);
-            setHeightScaled(heightScaled);
-            props.onVideoLoaded(item);
-          }}
-          style={
-            isPortation
-              ? [styles.contentVideoPortation, {height: heightScaled}]
-              : [styles.contentVideo, {height: heightScaled}]
-          }
-          resizeMode={'stretch'}
-        />
-      )}
     </View>
   );
 };

@@ -77,11 +77,6 @@ const StoryContainer: React.FC<Props> = (props: Props) => {
     setLoaded(true);
   };
 
-  const onVideoLoaded = (length) => {
-    setLoaded(true);
-    setDuration(length.duration);
-  };
-
   const onPause = (result) => {
     setIsPause(result);
   };
@@ -101,7 +96,6 @@ const StoryContainer: React.FC<Props> = (props: Props) => {
             <Story
               onImageLoaded={onImageLoaded}
               pause
-              onVideoLoaded={onVideoLoaded}
               story={story}
             />
           </View>
@@ -150,7 +144,6 @@ const StoryContainer: React.FC<Props> = (props: Props) => {
             onImageLoaded={onImageLoaded}
             pause={isPause}
             isNewStory={props.isNewStory}
-            onVideoLoaded={onVideoLoaded}
             story={story}
           />
 
